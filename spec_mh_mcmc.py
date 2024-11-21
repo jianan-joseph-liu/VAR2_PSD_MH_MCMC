@@ -490,7 +490,7 @@ class SpecMCMC:
                 tfd.Independent(
                     tfd.MultivariateNormalDiag(
                         loc = current_state[i][0],  
-                        scale_diag = trainable_Mvnormal.stddev()[i]
+                        scale_diag = trainable_Mvnormal.stddev()[i] * 0.2
                     ), 
                     reinterpreted_batch_ndims=1)
                 for i in range(n_params)])
@@ -500,16 +500,16 @@ class SpecMCMC:
             # Calculate the current and proposed log posterior
             current_log_prob = (Spec_hs.loglik(current_state) + 
                                Spec_hs.logprior_hs(current_state))
-            print('current_log_prob:', current_log_prob )
+            #print('current_log_prob:', current_log_prob )
             proposed_log_prob = (Spec_hs.loglik(proposed_state) + 
                                 Spec_hs.logprior_hs(proposed_state))
-            print('proposed_log_prob:', proposed_log_prob )
+            #print('proposed_log_prob:', proposed_log_prob )
             # Calculate MH ratio
             log_ratio = proposed_log_prob - current_log_prob
             
             
             alpha = tf.random.uniform([])
-            print('log_ratio:', log_ratio, 'log_alpha:', tf.math.log(alpha))
+            #print('log_ratio:', log_ratio, 'log_alpha:', tf.math.log(alpha))
             if log_ratio > tf.math.log(alpha):
                 current_state = proposed_state
                 if total_samples >= burn_in:

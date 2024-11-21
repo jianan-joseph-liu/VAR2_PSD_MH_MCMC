@@ -26,9 +26,9 @@ freq = freq*(2*np.pi)
 data = Simulation.simData(varCoef, vmaCoef, sigma=sigma)
 
 Spec = spec_mh_mcmc.SpecMCMC(data)
-result_list = Spec.run_VI_MCMC(N_delta=30, N_theta=30, lr_map=0.012, ntrain_map=5000, 
+result_list = Spec.run_VI_MCMC(N_delta=8, N_theta=8, lr_map=0.015, ntrain_map=5000, 
                             nchunks=1, time_interval=n, required_part=0.5, 
-                            num_samples=20, burn_in=2)
+                            num_samples=2000, burn_in=100)
 
 spec_mat_q = result_list[0]/(np.pi/0.5)
 spectral_density_all = result_list[3]/(np.pi/0.5)
